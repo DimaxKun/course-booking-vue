@@ -64,16 +64,16 @@
 
            
             if(
-                e.res.status === 404 || 
-                e.res.status === 401 || 
-                e.res.status === 400
+                e.response?.status === 404 || 
+                e.response?.status === 401 || 
+                e.response?.status === 400
             ){
                
-                notyf.error(e.res.data.message);
+                notyf.error(e.response?.data?.message || "Login failed.");
             } else {
                
                 console.error(e);
-                notyf.error("Login Failed. Please contact administrator.");
+                notyf.error(e.response?.data?.message || "Login failed. Please try again.");
             }
 
         }
@@ -91,10 +91,11 @@
 </script>
 
 <template>
-	<div class="container-fluid">
-	    <h1 class="my-5 pt-3 text-primary text-center">Login Page</h1> 
+	<div class="container-fluid page-shell">
+	    <h1 class="my-4 text-primary text-center section-title">Welcome!</h1>
+      <p class="text-center section-subtitle mb-4">Login to continue booking your next course.</p>
 	    <div class="row d-flex justify-content-center">
-	        <div class="col-md-5 border border rounded-3 mx-auto p-5">
+	        <div class="col-md-6 col-lg-5 auth-card mx-auto p-4 p-md-5">
 	            <form v-on:submit="handleSubmit">
 	                <div class="mb-3">
 	                    <label for="emailInput" class="form-label">Email Address</label>

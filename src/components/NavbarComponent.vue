@@ -1,22 +1,15 @@
 <script setup>
-  import {onBeforeMount, ref} from "vue";
   import { useGlobalStore } from "../stores/global";
 
   
   const {user} = useGlobalStore();
-  
-  const email = ref("")
-
-  onBeforeMount(()=>{ 
-    console.log(user);
-  });
 
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg sticky-top bg-light shadow-sm">
+  <nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
     <div class="container">
-	  <router-link :to="{ name: 'Home' }" class="navbar-brand text-dark fw-bold">ZUITT</router-link>
+	  <router-link :to="{ name: 'Home' }" class="navbar-brand text-dark fw-bold">CourseBooking</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,6 +18,7 @@
           <router-link :to="{ name: 'Courses' }" class="nav-link">Courses</router-link>
           <router-link :to="{ name: 'News' }" class="nav-link">News</router-link>
           <router-link :to="{ name: 'Profile' }" class="nav-link" v-if="user.email">Profile</router-link>
+          <router-link :to="{ name: 'MyBookings' }" class="nav-link" v-if="user.email && !user.isAdmin">My Bookings</router-link>
           
           <router-link :to="{ name: 'AddCourse' }" class="nav-link" v-if="user.email && user.isAdmin">Add Course</router-link>
           

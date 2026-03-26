@@ -21,6 +21,9 @@ export const useGlobalStore = defineStore('global',() => {
 		token: localStorage.getItem('token'),
 		email: null,
 		isAdmin: null,
+		firstName: null,
+		lastName: null,
+		mobileNo: null,
 		isLoading: false
 	})
 
@@ -39,22 +42,42 @@ export const useGlobalStore = defineStore('global',() => {
 			user.token = null;
 		  	user.email = null;
         	user.isAdmin = null;
+			user.firstName = null;
+			user.lastName = null;
+			user.mobileNo = null;
+			user.isLoading = false;
 
         	return;
     	}
 
 		user.isLoading = true;
-    	//data was destructured from the response object instead.
-        // use api.get to make a GET request to the /users/details endpoint.
-        let { data } = await api.get('/users/details');
-		
-		user.isLoading = false;
-		//update the global user state with the token.
-		user.token = token;
-        //update the global user state with the user details.
-        user.email = data.email;
-        //We can now add detail whether the user logged in is an admin.
-        user.isAdmin = data.isAdmin;
+		try {
+	    	//data was destructured from the response object instead.
+	        // use api.get to make a GET request to the /users/details endpoint.
+	        let { data } = await api.get('/users/details');
+			
+			//update the global user state with the token.
+			user.token = token;
+	        //update the global user state with the user details.
+	        user.email = data.email;
+	        //We can now add detail whether the user logged in is an admin.
+	        user.isAdmin = data.isAdmin;
+			user.firstName = data.firstName ?? null;
+			user.lastName = data.lastName ?? null;
+			user.mobileNo = data.mobileNo ?? null;
+		} catch (e) {
+			// Token is invalid/expired or API unreachable: reset local session.
+			console.error(e);
+			localStorage.removeItem('token');
+			user.token = null;
+			user.email = null;
+			user.isAdmin = null;
+			user.firstName = null;
+			user.lastName = null;
+			user.mobileNo = null;
+		} finally {
+			user.isLoading = false;
+		}
 
 	}
 

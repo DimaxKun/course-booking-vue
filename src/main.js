@@ -17,6 +17,7 @@ import LogoutPage from "./pages/LogoutPage.vue";
 import NewsPage from "./pages/NewsPage.vue";
 import ErrorPage from "./pages/ErrorPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
+import MyBookingsPage from "./pages/MyBookingsPage.vue";
 
 import AddCourse from "./pages/AddCourse.vue";
 import ResetPasswordPage from "./pages/ResetPasswordPage.vue";
@@ -68,6 +69,11 @@ const router = createRouter({
             path: "/profile",
             name: "Profile",
             component: ProfilePage,
+        },
+        {
+            path: "/my-bookings",
+            name: "MyBookings",
+            component: MyBookingsPage,
         },
         {
             path: "/addCourse",

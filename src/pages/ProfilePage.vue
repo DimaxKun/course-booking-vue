@@ -66,10 +66,10 @@
     }
 
     function openProfileModal() {
-        // clear fields each time the modal opens
-        firstName.value = "";
-        lastName.value = "";
-        mobileNo.value = "";
+        // prefill from current user state
+        firstName.value = user.firstName || "";
+        lastName.value = user.lastName || "";
+        mobileNo.value = user.mobileNo || "";
 
         nextTick(() => {
             if (profileModalRef.value) {
@@ -136,6 +136,10 @@
             );
 
             notyf.success("Profile updated successfully.");
+            // refresh global user details so the profile header updates
+            user.firstName = firstName.value;
+            user.lastName = lastName.value;
+            user.mobileNo = mobileNo.value;
             closeProfileModal();
         }catch(err){
             const message = err.response?.data?.message || err.message || "Failed to update profile.";
@@ -147,16 +151,16 @@
 </script>
 
 <template>
-    <div class="container-fluid" v-if="user.email">
-        <h1 class="my-5 pt-3 text-primary text-center">Profile Page</h1> 
+    <div class="container-fluid page-shell" v-if="user.email">
+        <h1 class="my-4 text-primary text-center section-title">My Profile</h1> 
         <div class="row d-flex justify-content-center">
-            <div class="col-md-5 border border rounded-3 mx-auto p-5">
-                <h2 className="mt-3">Juan Dela Cruz</h2>
+            <div class="col-md-6 col-lg-5 app-card mx-auto p-4 p-md-5">
+                <h2 class="mt-3">{{ (user.firstName || "") + " " + (user.lastName || "") }}</h2>
                 <hr />
                 <h4>Contacts</h4>
                 <ul>
-                    <li>Email: jdelacruz@mail.com</li>
-                    <li>Mobile No: 09123456789</li>
+                    <li>Email: {{ user.email }}</li>
+                    <li>Mobile No: {{ user.mobileNo || "-" }}</li>
                 </ul>
 
                 <hr />

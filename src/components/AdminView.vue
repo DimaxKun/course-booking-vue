@@ -1,6 +1,7 @@
 <template>
-  <h1 class="text-center text-primary mt-5">Admin Dashboard</h1>
-  <table class="table table-striped border">
+  <h2 class="text-center text-primary mb-4 section-title">Admin Dashboard</h2>
+  <div class="dashboard-table-wrap">
+  <table class="table table-striped dashboard-table">
       <thead>
           <tr>
               <th>ID</th>
@@ -30,6 +31,7 @@
           </tr>
       </tbody>
   </table>
+  </div>
 </template>
 
 <script setup>

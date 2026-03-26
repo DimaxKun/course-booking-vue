@@ -1,38 +1,30 @@
-# s59-s67
+# Course Booking App
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue course booking app frontend that connects to your existing `course-api` backend.
 
-## Recommended IDE Setup
+## Features
+- Users can register, login, update profile, and reset password
+- Users can browse/search courses and enroll in available courses
+- Admins can add, edit, archive, and activate courses
+- Improved error handling and loading states across core flows
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Local setup
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+### 1) Install frontend dependencies
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 2) Environment variables
+
+- Set `VITE_COURSE_BOOKING_API` in `.env` to your running `course-api` base URL.
+- Example:
+  - `VITE_COURSE_BOOKING_API=http://localhost:4000`
+
+### 3) Run frontend
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```

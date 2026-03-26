@@ -1,5 +1,5 @@
 <script setup>
-    import { onBeforeMount, reactive } from "vue";
+    import { computed, onBeforeMount, reactive, ref } from "vue";
     import { useRoute, useRouter } from "vue-router";
     import api from "../api";
 
@@ -14,44 +14,52 @@
     const router = useRouter();
 
     const course = reactive({ data: null });
+    const state = reactive({ loading: false, enrolling: false, error: "" });
+    const route = useRoute();
 
-   
+    const canBook = computed(() => {
+        if (!course.data) return false;
+        if (!user.email || user.isAdmin) return false;
+        if (course.data.isActive === false) return false;
+        return true;
+    });
+
     async function handleEnroll() {
-        
-        let { data } = await api.post(
-            `/enrollments/enroll`,
-            {
-                
-                enrolledCourses: [
-                    {
-                        courseId: course.data._id
-                    },
-                ],
-                totalPrice: course.data.price
+        if (!canBook.value || state.enrolling) return;
+        state.enrolling = true;
+        try {
+            const { data } = await api.post(`/enrollments/enroll`, {
+                enrolledCourses: [{ courseId: course.data._id }],
+                totalPrice: course.data.price,
+            });
+
+            if (data?.success === true) {
+                notyf.success(data.message || "Enrollment successful.");
+                router.push({ path: "/my-bookings" });
+            } else {
+                notyf.error(data?.message || "Enrollment failed.");
             }
-        );
-
-        
-        if(data.success === true){
-
-            notyf.success(data.message)
-            router.push({path: '/courses'});
-
-        } else {
-
-            notyf.error("Enrollment Failed")
-
+        } catch (e) {
+            console.error(e);
+            notyf.error(e.response?.data?.message || "Booking failed. Please try again.");
+        } finally {
+            state.enrolling = false;
         }
     }
 
     onBeforeMount(async () => {
-        
-        const route = useRoute();
-        
-        let { data } = await api.get(`/courses/specific/${route.params.id}`);
-
-        
-        course.data = data;
+        state.loading = true;
+        state.error = "";
+        try {
+            let { data } = await api.get(`/courses/specific/${route.params.id}`);
+            course.data = data;
+        } catch (e) {
+            console.error(e);
+            state.error = e.response?.data?.message || "Failed to load course.";
+            notyf.error(state.error);
+        } finally {
+            state.loading = false;
+        }
     });
 </script>
 
@@ -90,10 +98,20 @@
                 </p>
                
                 <p>Price: PHP {{ course.data.price }}</p>
+
+                <div v-if="course.data.isActive === false" class="alert alert-warning">
+                    This course is currently unavailable.
+                </div>
                 
                 
-                <button class="btn btn-primary" type="button" v-if="user.email && !user.isAdmin" @click="handleEnroll">
-                    Enroll
+                <button
+                    class="btn btn-primary"
+                    type="button"
+                    v-if="user.email && !user.isAdmin"
+                    @click="handleEnroll"
+                    :disabled="!canBook || state.enrolling"
+                >
+                    {{ state.enrolling ? "Booking..." : "Book Course" }}
                 </button>
                 
                 <button class="btn btn-danger" type="button" v-if="user.email && user.isAdmin" disabled>
@@ -108,8 +126,12 @@
         </div>
 
         
-        <div class="text-center my-5" v-if="!course.data">
+        <div class="text-center my-5" v-if="state.loading">
             <div class="spinner-grow"></div>
+        </div>
+
+        <div class="alert alert-danger my-4" v-if="!state.loading && !course.data && state.error">
+            {{ state.error }}
         </div>
     </div>
 </template>

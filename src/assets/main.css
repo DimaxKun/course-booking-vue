@@ -1,11 +1,168 @@
+:root {
+  --app-bg: #f4f7fb;
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --border-soft: #e2e8f0;
+  --shadow-soft: 0 8px 30px rgba(15, 23, 42, 0.07);
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #eaf1ff 0%, var(--app-bg) 35%);
+  color: var(--text-main);
+  font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.page-shell {
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
+}
+
+.section-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+}
+
+.app-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.auth-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.form-control,
+.form-select,
+.input-group-text {
+  border-color: #dbe3ee;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+}
+
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.navbar {
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.navbar-brand {
+  letter-spacing: 0.02em;
+}
+
+.nav-link {
+  color: #334155;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+}
+
+.nav-link.router-link-active {
+  color: var(--primary);
+  background: #eaf1ff;
+}
+
+.course-card {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: var(--surface);
+}
+
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+}
+
+.course-card .card-img-top {
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.search-shell .input-group {
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.search-shell .form-control {
+  background: transparent;
+}
+
+.dashboard-table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  overflow-x: auto;
+}
+
+.dashboard-table {
+  margin-bottom: 0;
+}
+
+.dashboard-table thead th {
+  background: var(--surface-soft);
+  color: #334155;
+  border-bottom: 1px solid var(--border-soft);
+  font-weight: 600;
+}
+
+.dashboard-table td,
+.dashboard-table th {
+  vertical-align: middle;
+}
+
 #banner-title {
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   font-weight: bolder;
   font-size: 54px;
 }
 
 #motto {
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   font-size: 1.7rem;
 }
 

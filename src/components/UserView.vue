@@ -1,8 +1,8 @@
 <template>
   <div class="row">
-      <div class="col my-5">
-          <h1 class="text-center text-primary py-1">Courses Offered</h1>
-          <p class="text-center">Select a course to enroll in!</p>
+      <div class="col mb-4">
+          <h2 class="text-center text-primary py-1 section-title">Courses Offered</h2>
+          <p class="text-center section-subtitle">Select a course to enroll in.</p>
     <!-- <CourseSearch /> -->
       </div>
   </div>

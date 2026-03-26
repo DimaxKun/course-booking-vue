@@ -104,10 +104,11 @@
 </script>
 
 <template>
-    <div class="container-fluid">
-        <h1 class="my-5 pt-3 text-primary text-center">Register Page</h1> 
+    <div class="container-fluid page-shell">
+        <h1 class="my-4 text-primary text-center section-title">Create Account</h1>
+        <p class="text-center section-subtitle mb-4">Join and start booking courses in minutes.</p>
         <div class="row d-flex justify-content-center">
-            <div class="col-md-5 border border rounded-3 mx-auto p-5">
+            <div class="col-md-6 col-lg-5 auth-card mx-auto p-4 p-md-5">
                 
                 <form v-on:submit.prevent="handleSubmit">
                     <div class="mb-3">
