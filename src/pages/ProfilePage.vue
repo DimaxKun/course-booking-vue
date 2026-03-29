@@ -151,51 +151,59 @@
 </script>
 
 <template>
-    <div class="container-fluid page-shell" v-if="user.email">
-        <h1 class="my-4 text-primary text-center section-title">My Profile</h1> 
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-6 col-lg-5 app-card mx-auto p-4 p-md-5">
-                <h2 class="mt-3">{{ (user.firstName || "") + " " + (user.lastName || "") }}</h2>
-                <hr />
-                <h4>Contacts</h4>
-                <ul>
-                    <li>Email: {{ user.email }}</li>
-                    <li>Mobile No: {{ user.mobileNo || "-" }}</li>
-                </ul>
+    <div class="container page-shell" v-if="user.email">
 
-                <hr />
+      <!-- Profile header -->
+      <div class="profile-header app-card p-4 d-flex align-items-center gap-4 mb-4">
+        <div class="profile-avatar">
+          {{ (user.firstName?.[0] || "") + (user.lastName?.[0] || "") }}
+        </div>
+        <div>
+          <h2 class="mb-0 fw-bold">{{ (user.firstName || "") + " " + (user.lastName || "") }}</h2>
+          <span class="badge text-bg-primary mt-1">{{ user.isAdmin ? "Admin" : "Student" }}</span>
+        </div>
+      </div>
 
-                <h4 class="mt-4">Update Profile</h4>
-                <div class="d-grid mt-3">
-                    <button type="button" class="btn btn-outline-primary" @click="openProfileModal">
-                        Update Profile
-                    </button>
-                </div>
-
-                <h4 class="mt-4">Reset Password</h4>
-                <div class="d-grid mt-3">
-                    <button type="button" class="btn btn-primary" @click="openResetModal">
-                        Reset Password
-                    </button>
-                </div>
+      <div class="row g-4">
+        <!-- Contact info -->
+        <div class="col-md-6">
+          <div class="app-card p-4 h-100">
+            <h5 class="fw-semibold mb-3"><i class="bi bi-person-lines-fill me-2 text-primary"></i>Contact Info</h5>
+            <div class="info-row">
+              <span class="info-label"><i class="bi bi-envelope me-2"></i>Email</span>
+              <span class="info-value">{{ user.email }}</span>
             </div>
+            <div class="info-row">
+              <span class="info-label"><i class="bi bi-phone me-2"></i>Mobile</span>
+              <span class="info-value">{{ user.mobileNo || "—" }}</span>
+            </div>
+          </div>
         </div>
 
+        <!-- Actions -->
+        <div class="col-md-6">
+          <div class="app-card p-4 h-100">
+            <h5 class="fw-semibold mb-3"><i class="bi bi-gear-fill me-2 text-primary"></i>Account Settings</h5>
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-outline-primary" @click="openProfileModal">
+                <i class="bi bi-pencil me-2"></i>Update Profile
+              </button>
+              <button type="button" class="btn btn-primary" @click="openResetModal">
+                <i class="bi bi-shield-lock me-2"></i>Reset Password
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
         <!-- Update Profile Modal -->
-        <div
-            ref="profileModalRef"
-            class="modal fade"
-            tabindex="-1"
-            aria-labelledby="updateProfileModalLabel"
-            aria-hidden="true"
-        >
+        <div ref="profileModalRef" class="modal fade" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
                     <form v-on:submit="handleUpdateProfile">
                         <div class="modal-body">
                             <div class="mb-3">
@@ -211,16 +219,9 @@
                                 <input type="text" class="form-control" id="mobileNoInput" v-model="mobileNo" />
                             </div>
                         </div>
-
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
-
-                            <button type="button" class="btn btn-secondary" v-if="!profileEnabled" disabled>
-                                Save Changes
-                            </button>
-                            <button type="submit" class="btn btn-primary" v-else :disabled="profileSubmitting">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" :disabled="!profileEnabled || profileSubmitting">
                                 {{ profileSubmitting ? "Saving..." : "Save Changes" }}
                             </button>
                         </div>
@@ -230,20 +231,13 @@
         </div>
 
         <!-- Reset Password Modal -->
-        <div
-            ref="resetModalRef"
-            class="modal fade"
-            tabindex="-1"
-            aria-labelledby="resetPasswordModalLabel"
-            aria-hidden="true"
-        >
+        <div ref="resetModalRef" class="modal fade" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
                     <form v-on:submit="handleResetPassword">
                         <div class="modal-body">
                             <div class="mb-3">
@@ -255,16 +249,9 @@
                                 <input type="password" class="form-control" id="confirmPasswordInput" v-model="confirmPassword" />
                             </div>
                         </div>
-
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
-
-                            <button type="button" class="btn btn-secondary" v-if="!isEnabled" disabled>
-                                Reset Password
-                            </button>
-                            <button type="submit" class="btn btn-primary" v-else :disabled="submitting">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" :disabled="!isEnabled || submitting">
                                 {{ submitting ? "Resetting..." : "Reset Password" }}
                             </button>
                         </div>
@@ -274,3 +261,42 @@
         </div>
     </div>
 </template>
+
+<style scoped>
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 0.95rem;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: var(--text-muted);
+}
+
+.info-value {
+  font-weight: 500;
+  color: var(--text-main);
+}
+</style>

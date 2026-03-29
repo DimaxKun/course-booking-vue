@@ -49,34 +49,56 @@
 </script>
 
 <template>
-	<div class="container">
-		<div class="row">
-			<div class="col my-5">
-				<h1 class="text-center text-primary py-1">News</h1>
-			</div>
-		</div>
-		<div class="row g-4">
-			<NewsComponent v-for="indivNews in newsData" :newsData="indivNews"/>
-		</div>
-		<div class="row" v-if="user.email">
-			<h1 class="my-5 pt-3 text-primary text-center">Feedback Form</h1>
+  <div class="container page-shell">
+    <div class="mb-5">
+      <h1 class="section-title text-primary mb-1">Latest News</h1>
+      <p class="section-subtitle">Stay up to date with what's happening.</p>
+    </div>
 
-			<div class="col-md-9 border border rounded-3 mx-auto p-5">
-	            <form v-on:submit="handleSubmit">
-	                <div class="mb-3">
-	                    <label for="emailInput" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="emailInput" v-model="email" />
-	                </div>
-	                <div class="mb-3">
-	                    <label for="feedbackInput" class="form-label">Feedback</label>
-	                    <textarea class="form-control" id="feedbackInput" placeholder="Let us know what you think" rows="5" v-model="feedback"></textarea>
-	                </div>
-	                <div class="d-grid mt-5">
-	                	<button type="submit" class="btn btn-primary btn-block"  v-if="isEnabled">Send Feedback</button>
-                		<button type="submit" class="btn btn-danger btn-block" disabled v-else>Send Feedback</button>
-	                </div>
-	            </form>
-	        </div>
-		</div>
-	</div>
+    <div class="row g-4">
+      <NewsComponent v-for="indivNews in newsData" :newsData="indivNews" />
+    </div>
+
+    <div v-if="user.email" class="mt-5">
+      <div class="app-card p-4 p-md-5" style="max-width: 700px; margin: 0 auto;">
+        <h4 class="fw-semibold mb-1"><i class="bi bi-chat-square-text-fill me-2 text-primary"></i>Send Feedback</h4>
+        <p class="text-muted mb-4" style="font-size: 0.9rem;">We'd love to hear what you think.</p>
+        <form @submit="handleSubmit">
+          <div class="mb-3">
+            <label for="emailInput" class="form-label">Email Address</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-envelope input-icon"></i>
+              <input type="email" class="form-control ps-icon" id="emailInput" placeholder="you@example.com" v-model="email" />
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="feedbackInput" class="form-label">Your Feedback</label>
+            <textarea class="form-control" id="feedbackInput" placeholder="Let us know what you think..." rows="4" v-model="feedback"></textarea>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary" :disabled="!isEnabled">
+              <i class="bi bi-send me-2"></i>Send Feedback
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.input-icon-wrap {
+  position: relative;
+}
+.input-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.ps-icon {
+  padding-left: 2.4rem;
+}
+</style>

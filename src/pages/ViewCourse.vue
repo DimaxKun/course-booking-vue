@@ -64,75 +64,99 @@
 </script>
 
 <template>
-    <div class="container">
-        <nav class="my-3" aria-label="breadcrumb">
+    <div class="container page-shell">
+        <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><router-link to="/courses">Courses</router-link></li>
-               
                 <li class="breadcrumb-item active" aria-current="page">
                     {{ course.data ? course.data.name : "..." }}
                 </li>
             </ol>
         </nav>
-        
-        <div class="row mx-auto my-3 gap-4 gap-md-0" v-if="course.data">
-            <div class="col-12 col-md-6">
-                
-                <img
-                    class="img-fluid rounded"
-                    :src="`https://placehold.co/600x400/377399/ffffff?font=lora&text=${encodeURIComponent(
-                        course.data.name
-                    )}`"
-                />
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="d-flex gap-2 text-primary">
-                    <h1 class="bi bi-mortarboard"></h1>
-                    
-                    <h1 class="mb-3">{{ course.data.name }}</h1>
-                </div>
-                <h6>Course Description:</h6>
-                <p class="text-muted">
-                    
-                    {{ course.data.description }}
-                </p>
-               
-                <p>Price: PHP {{ course.data.price }}</p>
 
-                <div v-if="course.data.isActive === false" class="alert alert-warning">
-                    This course is currently unavailable.
-                </div>
-                
-                
-                <button
-                    class="btn btn-primary"
-                    type="button"
-                    v-if="user.email && !user.isAdmin"
-                    @click="handleEnroll"
-                    :disabled="!canBook || state.enrolling"
-                >
-                    {{ state.enrolling ? "Booking..." : "Book Course" }}
-                </button>
-                
-                <button class="btn btn-danger" type="button" v-if="user.email && user.isAdmin" disabled>
-                    Admin are not allowed to enroll
-                </button>
-                
-                <router-link to="/login" class="btn btn-outline-danger" type="button" v-if="!user.email">
-                    Login to Enroll
-                </router-link>
-                
-            </div>
-        </div>
-
-        
         <div class="text-center my-5" v-if="state.loading">
-            <div class="spinner-grow"></div>
+            <div class="spinner-grow text-primary"></div>
         </div>
 
-        <div class="alert alert-danger my-4" v-if="!state.loading && !course.data && state.error">
+        <div class="alert alert-danger" v-if="!state.loading && !course.data && state.error">
             {{ state.error }}
+        </div>
+
+        <div class="app-card overflow-hidden" v-if="course.data">
+            <div class="row g-0">
+                <div class="col-md-5">
+                    <img
+                        class="img-fluid w-100 h-100 course-detail-img"
+                        :src="`https://placehold.co/600x400/377399/ffffff?font=lora&text=${encodeURIComponent(course.data.name)}`"
+                    />
+                </div>
+                <div class="col-md-7 p-4 p-md-5 d-flex flex-column">
+                    <div class="mb-2">
+                        <span v-if="course.data.isActive === false" class="badge text-bg-warning mb-2">Unavailable</span>
+                        <span v-else class="badge text-bg-success mb-2">Available</span>
+                    </div>
+
+                    <h1 class="section-title mb-2">{{ course.data.name }}</h1>
+                    <p class="text-muted mb-4">{{ course.data.description }}</p>
+
+                    <div class="course-price-tag mb-4">
+                        <span class="price-label">Price</span>
+                        <span class="price-value">PHP {{ course.data.price }}</span>
+                    </div>
+
+                    <div class="mt-auto">
+                        <div v-if="course.data.isActive === false" class="alert alert-warning py-2">
+                            This course is currently unavailable for booking.
+                        </div>
+
+                        <button
+                            class="btn btn-primary btn-lg w-100"
+                            type="button"
+                            v-if="user.email && !user.isAdmin"
+                            @click="handleEnroll"
+                            :disabled="!canBook || state.enrolling"
+                        >
+                            <i class="bi bi-calendar-check me-2"></i>
+                            {{ state.enrolling ? "Booking..." : "Book This Course" }}
+                        </button>
+
+                        <div v-if="user.email && user.isAdmin" class="alert alert-secondary py-2 mb-0 text-center">
+                            <i class="bi bi-info-circle me-1"></i> Admins cannot enroll in courses.
+                        </div>
+
+                        <router-link to="/login" class="btn btn-outline-primary btn-lg w-100" v-if="!user.email">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Login to Book
+                        </router-link>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
+
+<style scoped>
+.course-detail-img {
+  object-fit: cover;
+  min-height: 280px;
+}
+
+.course-price-tag {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.price-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.price-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+</style>
 

@@ -22,13 +22,15 @@
 </script>
 
 <template>
-  <div class="container-fluid">
-    <BannerComponent :bannerProps=bannerProps />
-    <HighlightsComponent />
-  </div>
-  <footer class="bg-primary">
-        <div class="text-center p-3 text-light">
-            © 2026 Mohammad Ali Dimacaling. All rights reserved.
-        </div>
+  <div>
+    <div class="container-fluid">
+      <BannerComponent :bannerProps=bannerProps />
+      <HighlightsComponent />
+    </div>
+    <footer class="bg-primary">
+      <div class="text-center p-3 text-light">
+        © 2026 Mohammad Ali Dimacaling. All rights reserved.
+      </div>
     </footer>
+  </div>
 </template>
