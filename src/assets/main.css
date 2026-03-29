@@ -158,18 +158,19 @@ a {
 #banner-title {
   font-family: "Trebuchet MS", sans-serif;
   font-weight: bolder;
-  font-size: 54px;
+  font-size: clamp(2.3rem, 5vw, 54px);
 }
 
 #motto {
   font-family: "Trebuchet MS", sans-serif;
-  font-size: 1.7rem;
+  font-size: clamp(1rem, 3vw, 1.7rem);
 }
 
 #banner {
-  background: url(https://i.imgur.com/frHbYvL.png),
+  background: url(/zuitt-bannerimg.png),
     linear-gradient(rgb(255, 255, 255), 70%, rgba(126, 209, 247, 0.5));
   background-size: cover;
   background-position: center;
-  height: 550px;
+  min-height: 550px;
+  height: auto;
 }

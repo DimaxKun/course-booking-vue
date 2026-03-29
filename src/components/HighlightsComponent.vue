@@ -49,30 +49,12 @@
 </template>
 
 <style scoped>
-.highlights-section {
-    background: var(--surface-soft);
-    padding: 2rem 1rem;
-}
-
-.highlight-icon-wrap {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: #eaf1ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    font-size: 1.6rem;
-    color: var(--primary);
-}
-
 .highlight-card {
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .highlight-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-10px);
     box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
 }
 </style>
