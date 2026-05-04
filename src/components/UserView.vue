@@ -1,14 +1,12 @@
 <template>
-  <div class="row">
-      <div class="col mb-4">
-          <h2 class="text-center text-primary py-1 section-title">Courses Offered</h2>
-          <p class="text-center section-subtitle">Select a course to enroll in.</p>
-    <!-- <CourseSearch /> -->
-      </div>
-  </div>
   <div class="row g-4">
-        <CourseComponent v-for="course in coursesData" :courseData="course" />
-
+    <CourseComponent v-for="course in coursesData" :key="course._id" :courseData="course" />
+    <div v-if="coursesData.length === 0" class="col-12">
+      <div class="text-center py-5 text-muted">
+        <i class="bi bi-journal-x" style="font-size: 2.5rem;"></i>
+        <p class="mt-3">No courses found.</p>
+      </div>
+    </div>
   </div>
 </template>
 

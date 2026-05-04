@@ -87,7 +87,7 @@
                 <div class="col-md-5">
                     <img
                         class="img-fluid w-100 h-100 course-detail-img"
-                        :src="`https://placehold.co/600x400/377399/ffffff?font=lora&text=${encodeURIComponent(course.data.name)}`"
+                        :src="`https://placehold.co/600x400/2563eb/ffffff?font=lora&text=${encodeURIComponent(course.data.name)}`"
                     />
                 </div>
                 <div class="col-md-7 p-4 p-md-5 d-flex flex-column">

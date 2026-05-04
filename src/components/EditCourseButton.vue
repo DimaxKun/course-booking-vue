@@ -1,7 +1,9 @@
 <template>
     <div>
         <!-- Edit Button -->
-        <button class="btn btn-primary" @click="openModal">Edit</button>
+        <button class="btn btn-outline-primary btn-sm" @click="openModal">
+          <i class="bi bi-pencil me-1"></i>Edit
+        </button>
 
         <!-- Modal -->
         <div

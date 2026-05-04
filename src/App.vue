@@ -26,8 +26,13 @@
       <component :is="Component" />
     </Transition>
   </router-view>
-</template>
 
+  <footer class="site-footer">
+    <div class="container text-center">
+      <span>© 2026 Mohammad Ali Dimacaling. All rights reserved.</span>
+    </div>
+  </footer>
+</template>
 
 <style scoped>
 .fade-enter-active,
@@ -38,5 +43,14 @@
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.site-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border-soft);
+  padding: 1.2rem 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: auto;
 }
 </style>

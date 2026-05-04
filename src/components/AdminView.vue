@@ -1,36 +1,36 @@
 <template>
-  <h2 class="text-center text-primary mb-4 section-title">Admin Dashboard</h2>
   <div class="dashboard-table-wrap">
-  <table class="table table-striped dashboard-table">
+    <table class="table dashboard-table mb-0">
       <thead>
-          <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Availability</th>
-              <th colspan="2">Actions</th>
-          </tr>
+        <tr>
+          <th>Name</th>
+          <th class="d-none d-md-table-cell">Description</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th class="text-end">Actions</th>
+        </tr>
       </thead>
       <tbody>
-          <tr v-for="course in coursesData" :key="course._id">
-              <td>{{ course._id }}</td>
-              <td>{{ course.name }}</td>
-              <td>{{ course.description }}</td>
-              <td>{{ course.price }}</td>
-              <td>
-                  <span v-if="course.isActive" class="text-success">Available</span>
-                  <span v-else class="text-danger">Unavailable</span>
-              </td>
-              <td>
-                  <EditCourseButton :course="course" @status-updated="refetchCourses" />
-              </td>
-              <td>
-                  <ToggleCourseStatusButton :course="course" @status-updated="refetchCourses" />
-              </td>
-          </tr>
+        <tr v-for="course in coursesData" :key="course._id">
+          <td class="fw-semibold">{{ course.name }}</td>
+          <td class="text-muted d-none d-md-table-cell" style="font-size: 0.88rem; max-width: 260px;">
+            {{ course.description.slice(0, 80) + (course.description.length > 80 ? '...' : '') }}
+          </td>
+          <td class="fw-semibold text-primary">PHP {{ course.price }}</td>
+          <td>
+            <span class="badge" :class="course.isActive ? 'text-bg-success' : 'text-bg-secondary'">
+              {{ course.isActive ? 'Active' : 'Archived' }}
+            </span>
+          </td>
+          <td class="text-end">
+            <div class="d-flex gap-2 justify-content-end">
+              <EditCourseButton :course="course" @status-updated="refetchCourses" />
+              <ToggleCourseStatusButton :course="course" @status-updated="refetchCourses" />
+            </div>
+          </td>
+        </tr>
       </tbody>
-  </table>
+    </table>
   </div>
 </template>
 
