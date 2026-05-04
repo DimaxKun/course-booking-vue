@@ -33,6 +33,15 @@ A full-stack web application for browsing, booking, and managing courses — bui
 
 ---
 
+## 🔑 Demo Credentials
+
+| Role | Email | Password |
+|---|---|---|
+| 👑 Admin | `admin@mail.com` | `password` |
+| 🧑 Customer | `juan@mail.com` | `juan1234` |
+
+---
+
 ## 🗂️ Project Structure
 
 ```
